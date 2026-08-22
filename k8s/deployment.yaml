@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: demo-app
-          # Replace with the ECR image pushed by .github/workflows/build-and-push.yml
+          # Replace with the ECR image pushed by .github/workflows/dev-ci.yml
           # e.g. <account_id>.dkr.ecr.<region>.amazonaws.com/demo/app:<tag>
           image: <ECR_REGISTRY>/demo/app:latest
           ports:

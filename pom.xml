@@ -49,7 +49,7 @@
 
             <!-- Jib builds & pushes the container image without a Dockerfile.
                  Registry/tag are injected from CI via -Djib.to.image / env vars,
-                 see .github/workflows/build-and-push.yml -->
+                 see .github/workflows/dev-ci.yml -->
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>

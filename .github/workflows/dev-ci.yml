@@ -1,0 +1,25 @@
+name: CI for DEV env
+# Cancel previous runs that are not completed
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+permissions:
+  contents: write
+  actions: read
+jobs:
+  ci:
+    uses: CoCoCoffeeCode/workflows/.github/workflows/coco-ci-v1.yaml@main
+    secrets: inherit
+    with:
+      registry: "340396142553.dkr.ecr.ap-southeast-1.amazonaws.com"
+      image_name: ${{ github.event.repository.name }}
+      owner: "Squad Core"
+      build_with_jib: true
+      environment: dev
