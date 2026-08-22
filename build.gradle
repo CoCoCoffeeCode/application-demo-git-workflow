@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.4'
+    id 'io.spring.dependency-management' version '1.1.6'
+    id 'com.google.cloud.tools.jib' version '3.4.3'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+description = 'Demo Spring Boot app for EKS/ECR/ArgoCD learning pipeline'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+bootJar {
+    archiveFileName = 'demo-app.jar'
+}
+
+// Jib builds & pushes the container image without a Dockerfile.
+// CI overrides `to.image` / `to.tags` via -Djib.to.image / -Djib.to.tags
+// (see coco-ci-v1.yaml reusable workflow) and authenticates through the
+// Docker credential helper set up by aws-actions/amazon-ecr-login.
+jib {
+    from {
+        image = 'eclipse-temurin:17-jre'
+    }
+    to {
+        image = 'demo/app'
+        tags = ['latest']
+    }
+    container {
+        ports = ['8080']
+        environment = [
+            SPRING_PROFILES_ACTIVE: 'prod'
+        ]
+    }
+}
