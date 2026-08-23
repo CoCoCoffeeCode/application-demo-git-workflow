@@ -13,7 +13,7 @@ public class DemoController {
 
     @GetMapping("/api/hello")
     public Map<String, String> hello() {
-        return Map.of("message", "Hello from demo-app!!");
+        return Map.of("message", "Hello from demo-app!!!");
     }
 
     @GetMapping("/api/health")
