@@ -20,6 +20,7 @@ jobs:
     with:
       registry: "000000000000.dkr.ecr.us-east-1.localhost:5100/demo/app"
       image_name: ${{ github.event.repository.name }}
+      gitops_app_name: "demo-app"
       owner: "Squad Core"
       build_with_jib: true
       environment: dev
